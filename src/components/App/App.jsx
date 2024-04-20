@@ -14,7 +14,7 @@ export default function App() {
 
   const [feedbackCount, setFeedbackCount] = useState(() => {
     const savedFeedback = localStorage.getItem('feedbackCount');
-    return savedFeedback ? JSON.parse(savedFeedback) : { defaultFeetback };
+    return savedFeedback ? JSON.parse(savedFeedback) :  defaultFeetback ;
 })
 
 
@@ -33,11 +33,11 @@ export default function App() {
 
   const totalFeedback =
     feedbackCount.good + feedbackCount.neutral + feedbackCount.bad;
+  
 
-
-  const positiveFeedback = Math.round(
+  const positiveFeedback = totalFeedback !== 0 ? Math.round(
     (feedbackCount.good / totalFeedback) * 100
-  );
+  ) : 0;
 
   const resetFeedback = () => {
     setFeedbackCount({...defaultFeetback});
