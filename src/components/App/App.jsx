@@ -2,23 +2,20 @@ import css from '../App/App.module.css'
 import Options from '../Options/Options';
 import Feedback from '../Feedback/Feedback';
 import Description from '../Description/Description';
-import Advertisement from '../Advertisement/Advertisement'
+import Notification from '../Notification/Notification';
 import { useState, useEffect } from 'react';
 
 export default function App() {
-  const [feedbackCount, setFeedbackCount] = useState({
+  const defaultFeetback = {
     good: 0,
     neutral: 0,
     bad: 0,
-  });
+  };
 
-  useEffect(() => {
+  const [feedbackCount, setFeedbackCount] = useState(() => {
     const savedFeedback = localStorage.getItem('feedbackCount');
-    if (savedFeedback !== null) {
-      return setFeedbackCount(JSON.parse(savedFeedback));
-    }
-    return 0;
-  }, []);
+    return savedFeedback ? JSON.parse(savedFeedback) : { defaultFeetback };
+})
 
 
   useEffect(() => {
@@ -43,11 +40,7 @@ export default function App() {
   );
 
   const resetFeedback = () => {
-    setFeedbackCount({
-      good: 0,
-      neutral: 0,
-      bad: 0,
-    });
+    setFeedbackCount({...defaultFeetback});
   };
 
   return (
@@ -66,7 +59,7 @@ export default function App() {
           positiveFeedback={positiveFeedback}
         />
       ) : (
-        <Advertisement/>
+        <Notification />
       )}
     </>
   );
